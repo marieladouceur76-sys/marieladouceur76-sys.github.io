@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cartographer's Map - Kingdom of SCOBY</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Cinzel:wght@600;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+            --map-bg: #E8DCC8;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background: linear-gradient(135deg, #4a3728 0%, #3d2f23 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-parchment);
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Ornate frame effect */
+        .page-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid var(--accent-gold);
+            border-radius: 2px;
+            box-shadow:
+                inset 0 0 0 8px var(--bg-parchment),
+                inset 0 0 0 11px var(--primary-dark);
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            border-top: 2px solid var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 1rem 0;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--secondary-purple);
+            font-style: italic;
+            margin-top: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Main Map Container */
+        .map-container {
+            display: grid;
+            grid-template-columns: 250px 1fr 200px;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            min-height: 700px;
+        }
+
+        /* LEFT SIDEBAR */
+        .sidebar-left {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 4px solid var(--secondary-purple);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .archaeist-badge {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--bg-parchment-alt) 0%, var(--bg-parchment) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--secondary-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .welcome-box {
+            background: var(--secondary-purple);
+            color: var(--bg-parchment);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .welcome-box p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .instructions-box {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .instructions-box h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .instructions-box ul {
+            list-style: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .instructions-box li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .instructions-box li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .discovery-box {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .discovery-label {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .discovery-vessel {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .discovery-detail {
+            font-size: 0.8rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* CENTER MAP */
+        .map-main {
+            background: linear-gradient(135deg, #DCC8A8 0%, #E8DCC8 100%);
+            border: 4px solid var(--primary-dark);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 700px;
+        }
+
+        .map-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-title {
+            position: absolute;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            letter-spacing: 2px;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .map-canvas-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        canvas:active {
+            cursor: grabbing;
+        }
+
+        .vessel-tooltip {
+            position: absolute;
+            background: var(--primary-dark);
+            color: var(--bg-parchment);
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: 2px solid var(--accent-gold);
+            font-size: 0.8rem;
+            pointer-events: none;
+            max-width: 150px;
+            z-index: 10;
+            display: none;
+        }
+
+        .vessel-tooltip.visible {
+            display: block;
+        }
+
+        /* RIGHT SIDEBAR */
+        .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .compass-rose {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .compass-rose-inner {
+            font-size: 3rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .compass-cardinal {
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--secondary-purple);
+            letter-spacing: 1px;
+        }
+
+        .compass-cardinal.n { top: 10px; left: 50%; transform: translateX(-50%); }
+        .compass-cardinal.s { bottom: 10px; left: 50%; transform: translateX(-50%); }
+        .compass-cardinal.e { right: 10px; top: 50%; transform: translateY(-50%); }
+        .compass-cardinal.w { left: 10px; top: 50%; transform: translateY(-50%); }
+
+        .controls-box {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 6px;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .controls-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .control-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            border: 2px solid var(--accent-gold);
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .zoom-display {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--secondary-purple);
+            margin-top: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* BOTTOM INFO BOX */
+        .info-box {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 3px solid var(--accent-gold);
+            max-width: 280px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--accent-gold);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .credits {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .credit-line {
+            color: var(--secondary-purple);
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+
+        /* EDIT LABEL */
+        .editable-label {
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+            display: block;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .map-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                min-height: auto;
+            }
+
+            .sidebar-left, .sidebar-right {
+                grid-column: 1;
+            }
+
+            .sidebar-right {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .compass-rose {
+                width: 140px;
+                height: 140px;
+            }
+
+            .info-box {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                max-width: 100%;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .page-wrapper {
+                padding: 1.5rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            .map-container {
+                grid-template-columns: 1fr;
+            }
+
+            .credits {
+                grid-template-columns: 1fr;
+            }
+
+            .compass-rose {
+                width: 120px;
+                height: 120px;
+            }
+
+            .control-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page-wrapper {
+                box-shadow: none;
+                padding: 2rem;
+                max-width: 100%;
+            }
+
+            .page-wrapper::before {
+                display: none;
+            }
+
+            .sidebar-left, .sidebar-right, .controls-box {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="content">
+            <!-- HEADER SECTION -->
+            <header>
+                <h1>The Cartographer's Map</h1>
+                <p class="subtitle">A World Ferments Together</p>
+            </header>
+
+            <!-- MAIN MAP GRID -->
+            <div class="map-container">
+                <!-- LEFT SIDEBAR -->
+                <div class="sidebar-left">
+                    <!-- EDIT: Replace emoji with Royal Archaeist tarot card image -->
+                    <div class="archaeist-badge">🗺️</div>
+
+                    <div class="sidebar-title">Royal Archaeist</div>
+
+                    <div class="welcome-box">
+                        <p><strong>Welcome to the Cartographer's Map.</strong></p>
+                        <p>Zoom in and pick a vessel to see what fermentation is like around the world.</p>
+                    </div>
+
+                    <div class="instructions-box">
+                        <h4>To Explore:</h4>
+                        <ul>
+                            <li>Zoom In for a closer look</li>
+                            <li>Tap a Vessel to learn its story</li>
+                            <li>New Discoveries are always brewing</li>
+                        </ul>
+                    </div>
+
+                    <div class="discovery-box">
+                        <!-- EDIT: Change era number below -->
+                        <span class="discovery-label">A New Vessel to Discover with Every New Era</span>
+                        <!-- EDIT: Replace vessel name and region -->
+                        <div class="discovery-vessel">Kōcha Kinoko</div>
+                        <div class="discovery-detail">Japan · Black Tea SCOBY</div>
+                    </div>
+                </div>
+
+                <!-- CENTER MAP -->
+                <div class="map-main">
+                    <div class="map-title">The Kingdom of SCOBY — A World Ferments Together</div>
+                    <div class="map-canvas-wrapper">
+                        <canvas id="mapCanvas"></canvas>
+                        <div class="vessel-tooltip" id="vesselTooltip"></div>
+                    </div>
+                    <div class="info-box">
+                        <p>Many Traditions. Many Vessels. One Living Story. Fermentation Unites Us.</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDEBAR -->
+                <div class="sidebar-right">
+                    <div class="compass-rose">
+                        <div class="compass-rose-inner">⭐</div>
+                        <div class="compass-cardinal n">N</div>
+                        <div class="compass-cardinal s">S</div>
+                        <div class="compass-cardinal e">E</div>
+                        <div class="compass-cardinal w">W</div>
+                    </div>
+
+                    <div class="controls-box">
+                        <div class="controls-label">Map Controls</div>
+                        <div class="control-buttons">
+                            <button class="control-btn" id="zoomInBtn">+ Zoom In</button>
+                            <button class="control-btn" id="zoomOutBtn">- Zoom Out</button>
+                            <button class="control-btn" id="resetBtn" style="grid-column: 1 / -1;">⟲ Reset View</button>
+                        </div>
+                        <div class="zoom-display" id="zoomDisplay">Zoom: 100%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER SECTION -->
+            <footer>
+                <p><strong>The Cartographer's Map</strong> | Fermentation Traditions Across the Globe</p>
+                <div class="credits">
+                    <!-- EDIT: Change researchers/editors as needed -->
+                    <div class="credit-line">Research & Fact Checking by: Marie L</div>
+                    <div class="credit-line">Editing & Web Design by: Claude</div>
+                    <div class="credit-line">Presented by: Gemini, NotebookLM</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--accent-gold);">© 2026 Marie, Kingdom of SCOBY</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- VESSEL DATA -->
+    <script>
+        // Vessel locations (latitude, longitude) and information
+        const vessels = [
+            { name: "Kōcha Kinoko", region: "Japan", type: "Black Tea SCOBY", x: 0.72, y: 0.35, description: "Japanese black tea fermentation culture" },
+            { name: "Kombucha", region: "Eastern Europe", type: "Green Tea SCOBY", x: 0.45, y: 0.30, description: "Traditional Eastern European kombucha" },
+            { name: "Water Kefir", region: "Mexico", type: "Sugar SCOBY", x: 0.25, y: 0.50, description: "Mexican water grain fermentation" },
+            { name: "Tepache", region: "Central America", type: "Fruit SCOBY", x: 0.27, y: 0.55, description: "Central American fruit fermentation" },
+            { name: "Rejuvelac", region: "Middle East", type: "Grain SCOBY", x: 0.50, y: 0.40, description: "Middle Eastern grain sprout beverage" },
+            { name: "Tibicos", region: "Africa", type: "Fruit SCOBY", x: 0.55, y: 0.60, description: "African fruit grain fermentation" },
+            { name: "Boza", region: "Turkey", type: "Grain SCOBY", x: 0.48, y: 0.35, description: "Turkish grain fermentation drink" },
+            { name: "Amazake", region: "China", type: "Rice SCOBY", x: 0.70, y: 0.40, description: "Chinese rice fermentation" },
+            { name: "Cider", region: "Western Europe", type: "Apple SCOBY", x: 0.38, y: 0.28, description: "Western European apple fermentation" },
+            { name: "Mead", region: "Scandinavia", type: "Honey SCOBY", x: 0.42, y: 0.18, description: "Scandinavian honey fermentation" }
+        ];
+
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+        let zoomLevel = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawMap();
+        }
+
+        function drawMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+
+            // Apply zoom and pan
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.scale(zoomLevel, zoomLevel);
+            ctx.translate(-canvas.width / 2 + panX, -canvas.height / 2 + panY);
+
+            // Draw map regions (simplified)
+            drawRegions();
+
+            // Draw vessel markers
+            vessels.forEach(vessel => {
+                drawVessel(vessel);
+            });
+
+            ctx.restore();
+        }
+
+        function drawRegions() {
+            ctx.fillStyle = '#E8DCC8';
+            ctx.strokeStyle = '#8B7355';
+            ctx.lineWidth = 2 / zoomLevel;
+
+            // Draw simplified continents
+            const regions = [
+                { name: 'Europe', x: 0.5, y: 0.2, w: 0.15, h: 0.2 },
+                { name: 'Africa', x: 0.5, y: 0.5, w: 0.15, h: 0.3 },
+                { name: 'Asia', x: 0.65, y: 0.3, w: 0.25, h: 0.4 },
+                { name: 'N. America', x: 0.2, y: 0.2, w: 0.15, h: 0.3 },
+                { name: 'S. America', x: 0.25, y: 0.55, w: 0.12, h: 0.3 },
+                { name: 'Australia', x: 0.75, y: 0.7, w: 0.08, h: 0.15 }
+            ];
+
+            regions.forEach(region => {
+                const x = region.x * canvas.width;
+                const y = region.y * canvas.height;
+                const w = region.w * canvas.width;
+                const h = region.h * canvas.height;
+
+                ctx.fillRect(x - w/2, y - h/2, w, h);
+                ctx.strokeRect(x - w/2, y - h/2, w, h);
+
+                // Region label
+                ctx.fillStyle = '#5C1F1F';
+                ctx.font = `${12 / zoomLevel}px Georgia`;
+                ctx.textAlign = 'center';
+                ctx.fillText(region.name, x, y);
+            });
+        }
+
+        function drawVessel(vessel) {
+            const x = vessel.x * canvas.width;
+            const y = vessel.y * canvas.height;
+            const radius = 12 / zoomLevel;
+
+            // Vessel circle
+            ctx.fillStyle = '#D4AF37';
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Vessel border
+            ctx.strokeStyle = '#5C1F1F';
+            ctx.lineWidth = 2 / zoomLevel;
+            ctx.stroke();
+
+            // Icon
+            ctx.fillStyle = '#5C1F1F';
+            ctx.font = `${14 / zoomLevel}px Georgia`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🫙', x, y);
+        }
+
+        // Mouse events for panning
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const dx = e.clientX - dragStartX;
+                const dy = e.clientY - dragStartY;
+                panX -= dx / zoomLevel;
+                panY -= dy / zoomLevel;
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+                drawMap();
+            }
+
+            // Check for vessel hover
+            checkVesselHover(e);
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+            document.getElementById('vesselTooltip').classList.remove('visible');
+        });
+
+        // Zoom controls
+        document.getElementById('zoomInBtn').addEventListener('click', () => {
+            zoomLevel = Math.min(zoomLevel * 1.3, 5);
+            updateZoomDisplay();
+            drawMap();
+        });
+
+        document.getElementById('zoomOutBtn').addEventListener('click', () => {
+            zoomLevel = Math.max(zoomLevel / 1.3, 0.5);
+            updateZoomDisplay();
+            drawMap();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            zoomLevel = 1;
+            panX = 0;
+            panY = 0;
+            updateZoomDisplay();
+            drawMap();
+        });
+
+        function updateZoomDisplay() {
+            document.getElementById('zoomDisplay').textContent = `Zoom: ${Math.round(zoomLevel * 100)}%`;
+        }
+
+        function checkVesselHover(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            // Convert screen coordinates to canvas coordinates
+            const canvasX = (mouseX - canvas.width / 2) / zoomLevel + canvas.width / 2 - panX;
+            const canvasY = (mouseY - canvas.height / 2) / zoomLevel + canvas.height / 2 - panY;
+
+            let hoveredVessel = null;
+            vessels.forEach(vessel => {
+                const x = vessel.x * canvas.width;
+                const y = vessel.y * canvas.height;
+                const distance = Math.sqrt(Math.pow(canvasX - x, 2) + Math.pow(canvasY - y, 2));
+
+                if (distance < 20) {
+                    hoveredVessel = vessel;
+                }
+            });
+
+            const tooltip = document.getElementById('vesselTooltip');
+            if (hoveredVessel) {
+                tooltip.innerHTML = `<strong>${hoveredVessel.name}</strong><br>${hoveredVessel.region}<br><em>${hoveredVessel.type}</em>`;
+                tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
+                tooltip.style.top = (e.clientY - rect.top + 10) + 'px';
+                tooltip.classList.add('visible');
+            } else {
+                tooltip.classList.remove('visible');
+            }
+        }
+
+        // Initialize
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+    </script>
+</body>
+</html>

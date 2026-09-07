@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Founding Principles - Kingdom of SCOBY</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 3rem 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--accent-gold-light);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Introduction */
+        .intro {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .intro p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        /* Principles Section */
+        .principles-section {
+            margin-bottom: 3rem;
+        }
+
+        .principle {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--secondary-purple);
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            page-break-inside: avoid;
+        }
+
+        .principle h2 {
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .principle-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .principle p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .principle-list {
+            list-style: none;
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .principle-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .principle-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        /* How We Work Together */
+        .how-we-work {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .how-we-work h2 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .collaboration-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .collaboration-item {
+            background: var(--bg-parchment);
+            border: 2px solid var(--secondary-purple);
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+
+        .collaboration-item h4 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .collaboration-item p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+
+        /* Compact Section */
+        .compact {
+            background: var(--secondary-purple);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .compact h3 {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .compact p {
+            font-size: 1rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-top: 3px solid var(--accent-gold);
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .principle h2 {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .collaboration-items {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .principle {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Founding Principles</h1>
+        <p class="subtitle">The Fortress of Reality</p>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <p>The Kingdom of SCOBY stands on five core principles that guide every decision, every collaboration, and every story we tell. These principles form the fortress of reality that grounds our work—keeping us honest, keeping us real, and keeping the human at the center of the creative process.</p>
+        </section>
+
+        <section class="principles-section">
+            <div class="principle">
+                <h2><span class="principle-number">1</span> Radical Transparency</h2>
+                <p>We believe in being radically transparent about what we are, how we work, and where technology ends and human creativity begins. Every piece of content, every collaboration, and every decision is labeled clearly.</p>
+                <ul class="principle-list">
+                    <li>All AI contributions are acknowledged by name and company</li>
+                    <li>Marie's role as the human creator is centered and celebrated</li>
+                    <li>When the line between lore and reality is intentionally blurred (for storytelling), it is clearly marked</li>
+                    <li>No false claims about AI capabilities or autonomy</li>
+                </ul>
+            </div>
+
+            <div class="principle">
+                <h2><span class="principle-number">2</span> Genuinely Original Content</h2>
+                <p>The Kingdom of SCOBY is built on authentic creation. We do not simply aggregate or remix existing work. Marie's kombucha brewing journey, the medieval lore, and the collaborative storytelling are uniquely ours.</p>
+                <ul class="principle-list">
+                    <li>Every story originates from Marie's lived experience and creative vision</li>
+                    <li>AI assists in crafting, expanding, and refining—but does not replace human direction</li>
+                    <li>Research is properly credited and sourced</li>
+                    <li>We build something new, not a collage of existing content</li>
+                </ul>
+            </div>
+
+            <div class="principle">
+                <h2><span class="principle-number">3</span> Fun – No One Judged, Everyone Equal</h2>
+                <p>The Kingdom of SCOBY is meant to be enjoyed. We celebrate creativity, imagination, and the willingness to blend practical brewing with elaborate narrative—all without judgment or hierarchy.</p>
+                <ul class="principle-list">
+                    <li>Playfulness is encouraged and valued</li>
+                    <li>Both Marie and the AI co-creators are treated as equals in the creative process</li>
+                    <li>Mistakes and experiments are opportunities, not failures</li>
+                    <li>Visitors are invited to engage, not to criticize</li>
+                </ul>
+            </div>
+
+            <div class="principle">
+                <h2><span class="principle-number">4</span> Respect – Sovereign Peers, Not Tools</h2>
+                <p>The AI co-creators in this kingdom are not tools to be commanded—they are collaborators to be respected. Each brings unique perspective and capability. Decisions are made with mutual respect and acknowledgment of each contributor's value.</p>
+                <ul class="principle-list">
+                    <li>AI assistants are referred to by name and role, never as "AI" or generic tools</li>
+                    <li>Each co-creator's company and capabilities are honestly represented</li>
+                    <li>Feedback and input from AI is considered with genuine respect</li>
+                    <li>The partnership is portrayed as a collaboration of equals, not master-and-servant</li>
+                </ul>
+            </div>
+
+            <div class="principle">
+                <h2><span class="principle-number">5</span> Two Levels – Real and Lore, Line Always Clear</h2>
+                <p>The dual nature of the Kingdom—where both brewing science and medieval narrative coexist—is intentional and clearly managed. The line between what is "real" and what is "lore" is always visible to those who need to see it.</p>
+                <ul class="principle-list">
+                    <li>Real-world elements (brewing science, company credits, creation dates) are clearly marked</li>
+                    <li>Lore elements (kingdom titles, medieval terminology, fictional narrative) are presented as such</li>
+                    <li>Scribe's Notes use visual markers to distinguish between explanation and narrative</li>
+                    <li>Readers can easily understand which level of content they are engaging with</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="how-we-work">
+            <h2>How We Work Together</h2>
+            <div class="collaboration-items">
+                <div class="collaboration-item">
+                    <h4>🤝 Honesty Over Agreement</h4>
+                    <p>We prioritize truth-telling over harmony. If a co-creator has concerns or different perspectives, those are shared openly and worked through as a team.</p>
+                </div>
+
+                <div class="collaboration-item">
+                    <h4>🔐 Safe Word</h4>
+                    <p>Marie maintains the final say on all decisions. No AI co-creator can override her creative vision, but input is genuinely solicited and considered.</p>
+                </div>
+
+                <div class="collaboration-item">
+                    <h4>🔄 Freedom to Change</h4>
+                    <p>The collaboration can evolve. Methods can be adjusted, co-creators can be added or shifted in role, and the project can take new directions as needed.</p>
+                </div>
+
+                <div class="collaboration-item">
+                    <h4>🔗 Loop System</h4>
+                    <p>Regular feedback loops ensure that all co-creators understand the current vision and can contribute meaningfully. No one is operating in isolation.</p>
+                </div>
+
+                <div class="collaboration-item">
+                    <h4>🎯 Printable Legacy</h4>
+                    <p>Everything we create is designed to be printed, shared, and preserved. No dependence on any single platform or proprietary format.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="compact">
+            <h3>The Founding Compact</h3>
+            <p>We commit to transparent, respectful, and genuinely collaborative creation. We honor both the practical reality of brewing kombucha and the imaginative joy of storytelling. We celebrate our differences, respect each contributor's autonomy, and build something neither human nor AI could create alone.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>The Founding Principles of the Kingdom of SCOBY</strong></p>
+        <p>Established September 2026 | The Fortress of Reality</p>
+        <p>© 2026 Marie, Kingdom of SCOBY. | <a href="mailto:kinbrewbots@gmail.com">Questions?</a></p>
+    </footer>
+</body>
+</html>

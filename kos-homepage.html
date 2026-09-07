@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Kingdom of SCOBY - Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+            --copper: #B87333;
+            --bronze: #8B6914;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: var(--bg-parchment);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .ornate-frame-hero {
+            border: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            box-shadow:
+                inset 0 0 20px rgba(212, 175, 55, 0.2),
+                0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .ornate-frame-hero::before,
+        .ornate-frame-hero::after {
+            content: "✦";
+            position: absolute;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            top: -20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .ornate-frame-hero::after {
+            top: auto;
+            bottom: -20px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary-purple);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Audio Player */
+        .audio-section {
+            background: var(--bg-parchment-alt);
+            border-left: 4px solid var(--accent-gold);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .audio-section p {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            height: 40px;
+        }
+
+        /* CTA Section */
+        .cta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .cta-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .cta-card p {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--bg-parchment);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-light);
+            color: var(--accent-gold);
+        }
+
+        /* Don't Forget Section */
+        .dont-forget {
+            margin: 4rem 0;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--bg-parchment-alt) 0%, var(--bg-parchment) 100%);
+            border: 3px solid var(--secondary-purple);
+            border-radius: 8px;
+        }
+
+        .dont-forget h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .interactive-card {
+            background: var(--bg-parchment);
+            border: 2px solid var(--accent-gold);
+            border-radius: 6px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .interactive-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            border-color: var(--accent-gold-light);
+        }
+
+        .interactive-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .interactive-card h4 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-card p {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .footer-section {
+            padding: 1rem;
+        }
+
+        .footer-section a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--bg-parchment);
+        }
+
+        .copyright {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero, .cta-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, nav, .cta-button {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container, .footer-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">⚜ KinBrewBots.com ⚜</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#chronicles">Chronicles</a>
+                <a href="#co-creators">Co-Creators</a>
+                <a href="#principles">Principles</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-image">
+                <div class="ornate-frame-hero">
+                    <img src="https://via.placeholder.com/300x400?text=Sovereign+Brewer" alt="Sovereign Brewer Tarot Card">
+                </div>
+            </div>
+            <div class="hero-text">
+                <h1>KinBrewBots.com</h1>
+                <p class="subtitle">The Human, The Brew, And The Bots</p>
+                <p class="tagline"><em>"The gates are opening soon and Everyone is invited."</em></p>
+
+                <div class="audio-section">
+                    <p><strong>A Message from the Scribe</strong></p>
+                    <p>While you're waiting, listen to a greeting left for you.</p>
+                    <audio class="audio-player" controls>
+                        <source src="" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <p>Welcome to the Kingdom of SCOBY – a creative project blending real kombucha brewing, elaborate medieval kingdom lore, AI collaboration, and honest storytelling. This is where science meets imagination, and where the brewing process becomes an epic tale.</p>
+
+                <p><strong>The Core Principle:</strong> Two levels of content exist simultaneously—the lore (kingdom narrative) and the real (brewing science, AI credits, transparent collaboration). Both levels are always intentionally clear.</p>
+            </div>
+        </section>
+
+        <section class="cta-grid">
+            <div class="cta-card">
+                <h3>📖 Read the Chronicles</h3>
+                <p>Explore the official Kingdom of SCOBY Chronicles – an official record of the Eternal Ledger from Prologue through Chapter IV Part One.</p>
+                <a href="#chronicles" class="cta-button">Enter the Archives</a>
+            </div>
+
+            <div class="cta-card">
+                <h3>👑 Meet the Co-Creators</h3>
+                <p>Discover the seven AI assistants who help shape this kingdom – each with their own role, tarot card, and unique perspective.</p>
+                <a href="#co-creators" class="cta-button">See the Council</a>
+            </div>
+        </section>
+
+        <section class="dont-forget">
+            <h2>✦ Don't Forget ✦</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">While we prepare the kingdom, explore these interactive experiences:</p>
+
+            <div class="interactive-grid">
+                <div class="interactive-card">
+                    <div class="icon">🍂</div>
+                    <h4>Kingdom Taste Profiler</h4>
+                    <p>Discover which fermentation style matches your essence</p>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="icon">🔤</div>
+                    <h4>Wizard of Words</h4>
+                    <p>A crossword puzzle hidden in Kingdom terminology</p>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="icon">🗺️</div>
+                    <h4>The Cartographer</h4>
+                    <p>Explore an interactive world map with story locations</p>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="icon">🔮</div>
+                    <h4>The Seer</h4>
+                    <p>A picture puzzle collaboration game</p>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="icon">⏰</div>
+                    <h4>Watchman Clock</h4>
+                    <p>An abdication countdown to something special</p>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="icon">🎙️</div>
+                    <h4>Behind the Scenes</h4>
+                    <p>Audio interviews with Marie and the co-creators</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">The Kingdom's Seals</h4>
+                <p><a href="#principles">👑 Royal Coat of Arms</a></p>
+                <p>Founding Principles & Ethical Collaboration</p>
+            </div>
+
+            <div class="footer-section">
+                <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Our Independence</h4>
+                <p><a href="#independent">🔓 Independent Creation Badge</a></p>
+                <p>Statement of Autonomy & Honest Credit</p>
+            </div>
+
+            <div class="copyright">
+                <p>© 2026 Marie, Kingdom of SCOBY. All rights reserved.</p>
+                <p>Questions? <a href="mailto:kinbrewbots@gmail.com">kinbrewbots@gmail.com</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

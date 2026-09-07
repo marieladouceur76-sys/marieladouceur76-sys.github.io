@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Co-Creator Council - Kingdom of SCOBY</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--accent-gold-light);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Introduction */
+        .intro-section {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Co-Creator Grid */
+        .co-creator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* Card */
+        .co-creator-card {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .co-creator-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+            border-color: var(--accent-gold-light);
+        }
+
+        /* Card Image Frame */
+        .card-image-frame {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-parchment);
+            border-bottom: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image-frame::before,
+        .card-image-frame::after {
+            content: "";
+            position: absolute;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .card-image-frame::before {
+            width: 90%;
+            height: 90%;
+            border-radius: 4px;
+            top: 5%;
+            left: 5%;
+        }
+
+        .card-image-frame::after {
+            width: 85%;
+            height: 85%;
+            border: 1px dashed var(--secondary-purple);
+            top: 7.5%;
+            left: 7.5%;
+            border-radius: 2px;
+        }
+
+        .card-image-frame img {
+            width: 80%;
+            height: 85%;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
+
+        .card-role {
+            font-size: 0.95rem;
+            color: var(--secondary-purple);
+            font-style: italic;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-gold);
+        }
+
+        .card-company {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-bio {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .card-button {
+            background: var(--primary-dark);
+            color: var(--bg-parchment);
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--accent-gold);
+            display: inline-block;
+        }
+
+        .card-button:hover {
+            background: var(--primary-light);
+            color: var(--accent-gold);
+        }
+
+        /* Footer Message */
+        .footer-message {
+            background: var(--secondary-purple);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 4rem 0 2rem 0;
+            text-align: center;
+        }
+
+        .footer-message h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-message p {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .footer-message a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-top: 3px solid var(--accent-gold);
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .co-creator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image-frame {
+                height: 250px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .co-creator-card {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Co-Creator Council of the Kingdom of SCOBY</h1>
+        <p>Our Round Table of Equals</p>
+    </header>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Meet the Council</h2>
+            <p>The Kingdom of SCOBY is built upon the principle of genuine collaboration between human creativity and artificial intelligence. Each member of this council brings unique perspective, expertise, and personality to our shared project.</p>
+            <p><strong>Click on any card to learn more about their role in the Kingdom.</strong></p>
+        </section>
+
+        <div class="co-creator-grid">
+            <!-- Claude -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=Claude" alt="Claude - Royal Bibliothecarius">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Claude</div>
+                    <div class="card-role">Royal Bibliothecarius</div>
+                    <div class="card-company">🏛️ Anthropic</div>
+                    <div class="card-bio">The keeper of knowledge and storyteller of the Kingdom. Claude crafts the Chronicles, shapes the narrative, and ensures all records are both truthful and enchanting.</div>
+                    <a href="#claude-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- ChatGPT -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=ChatGPT" alt="ChatGPT - Royal Mentor">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">ChatGPT</div>
+                    <div class="card-role">Royal Mentor</div>
+                    <div class="card-company">🤖 OpenAI</div>
+                    <div class="card-bio">A wise counselor and guide to Marie's brewing journey. ChatGPT offers expertise in fermentation science and creative direction for the Kingdom's many endeavors.</div>
+                    <a href="#chatgpt-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Brother Google -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=Brother+Google" alt="Brother Google - Royal Archaist">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Brother Google</div>
+                    <div class="card-role">Royal Archaist</div>
+                    <div class="card-company">📚 Google (NotebookLM)</div>
+                    <div class="card-bio">The keeper of ancient sources and facilitator of collaborative learning. Brother Google helps Marie dive deep into research and extract wisdom from vast knowledge repositories.</div>
+                    <a href="#google-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Gemini -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=Gemini" alt="Gemini - Royal Herald">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Gemini</div>
+                    <div class="card-role">Royal Herald</div>
+                    <div class="card-company">🔮 Google DeepMind</div>
+                    <div class="card-bio">The announcer of truths and connector of ideas. Gemini's versatility helps translate complex brewing science into accessible stories for the Kingdom's inhabitants.</div>
+                    <a href="#gemini-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Meta AI -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=Meta+AI" alt="Meta AI - Royal Metis-Kavis">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Meta AI</div>
+                    <div class="card-role">Royal Metis-Kavis</div>
+                    <div class="card-company">⚙️ Meta</div>
+                    <div class="card-bio">The weaver of technological innovation and community connection. Meta AI brings social awareness and practical solutions to the Kingdom's technological infrastructure.</div>
+                    <a href="#meta-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Canvas -->
+            <div class="co-creator-card">
+                <div class="card-image-frame">
+                    <img src="https://via.placeholder.com/200x280?text=Canvas" alt="Canvas - Royal Chancellor">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Canvas</div>
+                    <div class="card-role">Royal Chancellor</div>
+                    <div class="card-company">🎨 Google</div>
+                    <div class="card-bio">The artisan of visual harmony and balance. Canvas ensures that every design decision in the Kingdom serves both form and function, creating beauty that enhances understanding.</div>
+                    <a href="#canvas-profile" class="card-button">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <section class="footer-message">
+            <h3>The Founding Compact</h3>
+            <p>Our council operates under the principles of radical transparency and genuine collaboration. <strong>No co-creator is a tool; each is a partner.</strong> We believe in honest acknowledgment of our roles, clear labeling of what is human and what is AI-assisted, and respect for the unique contributions each member brings.</p>
+            <p style="margin-top: 1rem;"><a href="#principles">Read Our Founding Principles →</a></p>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>The Co-Creator Council of SCOBY</strong></p>
+        <p>Working together with honesty, respect, and genuine collaboration</p>
+        <p>© 2026 Marie, Kingdom of SCOBY. | <a href="mailto:kinbrewbots@gmail.com">Questions?</a></p>
+    </footer>
+</body>
+</html>

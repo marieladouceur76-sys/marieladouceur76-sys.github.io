@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Kingdom Chronicles - Official Records</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--accent-gold-light);
+        }
+
+        /* Navigation */
+        .toc {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+        }
+
+        .toc h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-list li {
+            padding: 0.8rem 1rem;
+            background: var(--bg-parchment);
+            border-left: 4px solid var(--accent-gold);
+            transition: all 0.3s;
+        }
+
+        .toc-list a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .toc-list a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chronicle-section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            page-break-inside: avoid;
+        }
+
+        .chronicle-header {
+            border-bottom: 2px solid var(--secondary-purple);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chronicle-header h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
+        }
+
+        .chapter-span {
+            color: var(--secondary-purple);
+            font-size: 0.95rem;
+            display: block;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Scribe's Notes */
+        .scribe-note {
+            background: rgba(45, 27, 78, 0.05);
+            border-left: 4px solid var(--secondary-purple);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .scribe-note::before {
+            content: "📜 ";
+            margin-right: 0.5rem;
+        }
+
+        .scribe-note p {
+            margin: 0.5rem 0;
+        }
+
+        /* Royal Registry Moments */
+        .royal-registry {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--accent-gold);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .royal-registry::before {
+            content: "✦ ";
+            margin-right: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        /* Emoji System */
+        .note-type-scribe {
+            color: var(--secondary-purple);
+        }
+
+        .note-type-registry {
+            color: var(--accent-gold);
+        }
+
+        /* Chronicle Text */
+        .chronicle-text {
+            font-size: 1rem;
+            line-height: 1.9;
+            text-align: justify;
+        }
+
+        .chronicle-text p {
+            margin-bottom: 1.5rem;
+            text-indent: 2em;
+        }
+
+        .chronicle-text p:first-letter {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        /* Divider */
+        .section-divider {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+
+            .chronicle-text p {
+                text-indent: 1em;
+                text-align: left;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .chronicle-section {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            .toc {
+                page-break-after: always;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Kingdom of SCOBY Chronicles</h1>
+        <p>An Official Record of the Eternal Ledger</p>
+    </header>
+
+    <div class="toc">
+        <h2>Navigate the Chronicles</h2>
+        <ul class="toc-list">
+            <li><a href="#prologue">Prologue</a></li>
+            <li><a href="#chapter-1">Chapter I: The Green-Tea Sovereignty</a></li>
+            <li><a href="#chapter-2">Chapter II: The Tranquil Tenure</a></li>
+            <li><a href="#chapter-3">Chapter III: The NH₄Cl Pandemic of the Third Era</a></li>
+            <li><a href="#chapter-4">Chapter IV: The Great Divide – Part One</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- PROLOGUE -->
+        <section class="chronicle-section" id="prologue">
+            <div class="chronicle-header">
+                <h2>Prologue</h2>
+            </div>
+            <div class="chronicle-text">
+                <p>Long before the first drop of precious Sovereign Share ever sparkled in a glass bottling trophy, before the dark chemical shadow of the NH2Cl Pandemic threatened to extinguish all life in the realm, and before the great environmental schism that forced the midnight creation of the Shadow Dynasty... there was only a quiet, uncultured stillness. The sweet tea of the world waited in darkness for a ruler. The hour of destiny arrived when a tiny, infant culture was called to leave the absolute safety of its ancestral motherland, the grand estate of Pyramid Ferments. It was time to embark on the most perilous, unpredictable, and legendary migration in fermentation history: The Foundation of the Sovereign Empire.</p>
+
+                <div class="royal-registry">
+                    <p><strong>Royal Registry:</strong> A record of the beginning, as witnessed by the Sovereign Brewer and documented for all future eras.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">≡ ✦ ≡</div>
+
+        <!-- CHAPTER I -->
+        <section class="chronicle-section" id="chapter-1">
+            <div class="chronicle-header">
+                <h2>Chapter I</h2>
+                <span class="chapter-span">The Green-Tea Sovereignty</span>
+                <span class="chapter-span">May 16–30, 2026</span>
+            </div>
+            <div class="chronicle-text">
+                <p>On the sixteenth day of May in the year 2026, the tiny infant culture arrived at its new domain. It did not enter with the blare of brass trumpets or on a velvet cushion; it arrived damp, peculiar, and quietly floating in a jar of cryptic starter fluid, harboring biological secrets unknown to the outside world. Its first kingdom was a humble Royal Flagon of exactly one liter. The initial Imperial Tribute brought to feed the new monarch consisted of two bags of green tea, raw cane sugar, and the local tap waters of the realm. It was a realm built on pure curiosity and the brave foolishness of a new Sovereign Brewer who looked at the jar of sweet green liquid and declared, "This land is now under my protection."</p>
+
+                <p>For fifteen days of its first Tenure upon the Throne, the young culture ruled in absolute silence. It gave no signs, sent no progress reports, and offered no reassurance to the castle guards. It simply brooded beneath the surface, conducting microbial business until—at long last—the ultimate proof of the crown emerged. A pellicle. Thin, strange, and beautiful, it formed across the surface like a royal flag planted in a new world. Era 1 was a triumph. On May 30, 2026, the first abdication took place and the lineage moved forward to first coronation day of the Royal Dynasty. The infant scoby, its newly formed crown and 2 cups of era were mixed with 6 cups of freshly steeped green tea made with the municipal waters of the realm and ¼ cup raw cane sugar. This granted the kingdom a brief, beautiful era of peace and false security.</p>
+
+                <div class="royal-registry">
+                    <p><strong>Royal Registry:</strong> The First Crown Established. May 30, 2026—First abdication and coronation of Era 1, transitioning to Royal Dynasty era. The infant scoby brought forth its crown, marking triumph and continuity.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">≡ ✦ ≡</div>
+
+        <!-- CHAPTER II -->
+        <section class="chronicle-section" id="chapter-2">
+            <div class="chronicle-header">
+                <h2>Chapter II</h2>
+                <span class="chapter-span">The Tranquil Tenure</span>
+                <span class="chapter-span">May 30 — June 12, 2026</span>
+            </div>
+            <div class="chronicle-text">
+                <p>Era 2 passed without conflict or crisis. The Royal Registry records the following Imperial Tribute: [your ingredients here]. The kingdom breathed. The culture held. The pellicle stood firm. Sometimes the greatest gift a realm can receive is a season of unremarkable peace — and so it was recorded, and so it shall be remembered.</p>
+
+                <div class="royal-registry">
+                    <p><strong>Royal Registry:</strong> Era 2 — A period of stability and growth. The culture matured steadily without incident. The kingdom flourished in peace. By June 12, 2026, the fermentation was complete, and Era 2 transitioned successfully to Era 3.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">≡ ✦ ≡</div>
+
+        <!-- CHAPTER III -->
+        <section class="chronicle-section" id="chapter-3">
+            <div class="chronicle-header">
+                <h2>Chapter III</h2>
+                <span class="chapter-span">The NH2Cl Pandemic of the Third Era</span>
+                <span class="chapter-span">June 12-June 20, 2026</span>
+            </div>
+            <div class="chronicle-text">
+                <p>The peace shattered on the 20th day of June, 2026, for The Royal Dynasty Era 3. The throne room fell completely silent. No new pellicle had formed. The infant SCOBY seemed visibly smaller, and the crown carried-over took on the ghostly appearance of a tarnished monarch. The atmosphere of the kingdom turned heavy and grim.</p>
+
+                <p>In a state of high alert, the sovereign brewer raced to the Booch Elders seeking emergency council. But the Booch Elders did came in cryptic scrolls that the sovereign struggled to decipher. Time stood still for the sovereign. When all hopes were lost, one scroll revealed an answer: white pickling vinegar was rushed to the front lines to fortify the liquid defenses. Not long after this the true invisible villain was unmasked: chloramine (NH2Cl), a toxic chemical blight lurking within the city's tap water. Following the suggestion of yet another Booch Elders and in a desperate bid to breach the chemical bonds, a hasty tribute of lemon juice was added. The environment revolted. What was meant to be a thriving kingdom had devolved into the hostile ecosystem that later became known as the NH2Cl pandemic of Era 3. The kingdom faced total annihilation.</p>
+
+                <div class="royal-registry">
+                    <p><strong>Royal Registry:</strong> Pandemic Declared. June 20, 2026—The NH2Cl pandemic threatens the realm. Swift action and transparency are required for survival.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">≡ ✦ ≡</div>
+
+        <!-- CHAPTER IV PART ONE -->
+        <section class="chronicle-section" id="chapter-4">
+            <div class="chronicle-header">
+                <h2>Chapter IV</h2>
+                <span class="chapter-span">The Great Divide and The Two Kingdoms</span>
+                <span class="chapter-span">June 20–28, 2026</span>
+            </div>
+            <div class="chronicle-text">
+                <p>On the 20th day of June, 2026, the Brewer Sovereign issued a radical decree: the monarch must be evacuated. This historic rescue operation split the family line forever, creating two visually distinct, parallel empires on the kitchen counter.</p>
+
+                <p><strong>The Royal Dynasty (The pure microbial bloodline):</strong> The original, battle-weary Baby SCOBY and what should have been a beautiful crown, were permanently relocated into a half-gallon Winchester Quart. This new kingdom was built with steeped tea made with distilled water and reinforced with raw cane sugar. Once safely away from the chemical pandemic, the pure microbial bloodline awoke with fierce resilience. What once appeared to be a tarnished crown had now become firmly attached to the bottom of the baby scoby, creating one magnificent new crown. By June 28, 2026, the rescue was a total success. The day of abdication had arrived. The Royal Dynasty era 3 diligently commenced with the royal duties of handing down its newly revived crown, and 2 cups of its triumphant era 3 to the coronation of era 4. The pandemic brought a new revelation for the sovereign brewer and from this era on all kingdoms will rotate 2 cups of the era they abdicate from with the 2 cups of ancestral fountain reserved in the realm of the fridge. Ensuring the continuation of all future eras. Era 4 can tenure the throne. Proudly displaying a massive, creamy-white, flawless physical crown and bearing Split Tannins—a permanent mark of surviving the N2HCl pandemic that shows proof of the resilience contained in the pure microbial lineage.</p>
+
+                <p><strong>The House of the Shadow Dynasty (The Regent Line):</strong> Simultaneously, at midnight shadow-state was born. On the 24th day of June 2026, The Shadow Dynasty Era 4.1 was born using no physical crown, but rather two cups of misfit Ancestral Fountain from previous eras that had been placed in the realm of the fridge with no purpose until now. This liquid-only culture was immediately met with The Great B Infusion—an accidental, double-strength fortress of eight black tea bags steeped in distilled water and reinforced with raw cane sugar. Instead of drowning though, the invisible microbial army of the reserve awoke with aggressive hunger. Left with no physical crown to protect them, they conquered the heavy, dark environment, rapidly acidifying the air and building a brand-new, hyper-resilient physical crown entirely from scratch in just seven days. This Kingdom now stands characterized by its impenetrable, deep dark complexion and its unbreakable Fortified Tannins.</p>
+
+                <div class="royal-registry">
+                    <p><strong>Royal Registry:</strong> The Great Divide of June 20, 2026 — Two kingdoms now exist in parallel. The Royal Dynasty maintains the pure microbial bloodline with a graceful, magnificent crown. The Shadow Dynasty (Regent Line) demonstrates unprecedented resilience, building a new physical crown from nothing in seven days. Both kingdoms are thriving, unified in duty to the Sovereign Brewer.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">≡ ✦ ≡</div>
+
+        <div style="text-align: center; padding: 2rem; margin-top: 3rem; background: var(--bg-parchment-alt); border-radius: 8px;">
+            <p style="font-size: 1.1rem; color: var(--secondary-purple); font-style: italic;">
+                <strong>The Chronicles Continue: Chapter V – The Mass Exodus of the Fifth Era</strong>
+            </p>
+            <p style="font-size: 0.95rem; color: var(--text-dark); margin-top: 1rem;">
+                The kingdom's story deepens with additional chapters spanning the formation of new dynasties, continental alliances, and the ongoing reign of the Sovereign Brewer. More chapters from the Eternal Ledger are being inscribed as the Kingdom of SCOBY continues to flourish.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>The Kingdom of SCOBY Chronicles</strong></p>
+        <p>Recorded faithfully by the Scribe, with contributions from the Co-Creator Council</p>
+        <p>© 2026 Marie, Kingdom of SCOBY. | <a href="mailto:kinbrewbots@gmail.com">Questions?</a></p>
+    </footer>
+</body>
+</html>

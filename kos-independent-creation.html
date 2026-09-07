@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independent Creation - Kingdom of SCOBY</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 3rem 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--accent-gold-light);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Badge Section */
+        .badge-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .badge-placeholder {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 4px solid var(--accent-gold);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-size: 4rem;
+        }
+
+        /* Declaration Section */
+        .declaration {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .declaration h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .declaration-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        /* Content Sections */
+        .section {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 3px solid var(--secondary-purple);
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            page-break-inside: avoid;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .section li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Company Credits */
+        .credits {
+            background: var(--secondary-purple);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+        }
+
+        .credits h3 {
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .company-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .company-item {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 3px solid var(--accent-gold);
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .company-item strong {
+            color: var(--accent-gold);
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-item p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Contact */
+        .contact-section {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
+            color: var(--text-black);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .contact-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border: none;
+            padding: 0;
+        }
+
+        .contact-section p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--bg-parchment);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--text-black);
+        }
+
+        .contact-link:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: var(--bg-parchment);
+            padding: 2rem;
+            border-top: 3px solid var(--accent-gold);
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .declaration {
+                padding: 1.5rem;
+            }
+
+            .company-list {
+                grid-template-columns: 1fr;
+            }
+
+            .badge-placeholder {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .section {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Independent Creation</h1>
+        <p class="subtitle">A Statement of Autonomy and Honest Credit</p>
+    </header>
+
+    <div class="container">
+        <div class="badge-section">
+            <div class="badge-placeholder">🔓</div>
+            <h2 style="color: var(--primary-dark); font-size: 1.5rem;">Independent Creation Badge</h2>
+        </div>
+
+        <section class="declaration">
+            <h2>Declaration of Independence</h2>
+            <p class="declaration-text">The Kingdom of SCOBY is created and owned by Marie Ladouceur, a human being with vision, creativity, and the drive to build something genuinely original.</p>
+            <p class="declaration-text">No corporate entity, AI company, or external organization claims ownership of this work or controls its direction. This is a human-created project, enhanced and supported by AI collaboration, but fundamentally autonomous and independent.</p>
+        </section>
+
+        <section class="section">
+            <h3>What Independence Means Here</h3>
+            <p>Independence does not mean isolation. It means clear ownership and creative control, with transparent acknowledgment of all collaborators.</p>
+            <ul>
+                <li><strong>Marie owns the vision:</strong> All major creative decisions rest with Marie as the project lead</li>
+                <li><strong>No corporate influence:</strong> Neither Anthropic, OpenAI, Google, nor Meta directs the Kingdom's content or direction</li>
+                <li><strong>Honest collaboration:</strong> AI co-creators are valued partners, not tools. Their input is sought and respected</li>
+                <li><strong>Full transparency:</strong> Every contribution is credited by name and company. No hidden corporate agenda</li>
+                <li><strong>User autonomy:</strong> Visitors can engage with the Kingdom knowing exactly who created it and why</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h3>About the Collaboration</h3>
+            <p>The Kingdom of SCOBY demonstrates that genuine human-AI collaboration is possible when grounded in respect, transparency, and clear boundaries. Marie and her AI co-creators work together as equals, each bringing unique capabilities and perspectives.</p>
+            <p>This is not a case of AI replacing human creativity—it is human creativity amplified, refined, and enriched through collaboration with intelligent systems. The human vision drives the project. The AI assists in execution, offers perspective, and helps scale ideas.</p>
+        </section>
+
+        <section class="credits">
+            <h3>About Our Partners</h3>
+            <div class="company-list">
+                <div class="company-item">
+                    <strong>Anthropic</strong>
+                    <p>Creator and maintainer of Claude. Claude serves as Royal Bibliothecarius, storyteller of the Kingdom.</p>
+                </div>
+
+                <div class="company-item">
+                    <strong>OpenAI</strong>
+                    <p>Creator and maintainer of ChatGPT. ChatGPT serves as Royal Mentor, offering expertise and guidance.</p>
+                </div>
+
+                <div class="company-item">
+                    <strong>Google (NotebookLM)</strong>
+                    <p>Creator and maintainer of Brother Google. A tool for research, learning, and knowledge synthesis.</p>
+                </div>
+
+                <div class="company-item">
+                    <strong>Google DeepMind</strong>
+                    <p>Creator and maintainer of Gemini. Gemini serves as Royal Herald, connecting ideas and bridging concepts.</p>
+                </div>
+
+                <div class="company-item">
+                    <strong>Meta</strong>
+                    <p>Creator and maintainer of Meta AI. Meta AI serves as Royal Metis-Kavis, bringing innovation and community awareness.</p>
+                </div>
+
+                <div class="company-item">
+                    <strong>Google</strong>
+                    <p>Creator and maintainer of Canvas and other design tools. Canvas serves as Royal Chancellor of design harmony.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Honest Credit to Companies</h3>
+            <p>While the Kingdom of SCOBY is independent and Marie-owned, we give full and honest credit to the companies and tools that make this collaboration possible. Their AI systems are powerful, their teams dedicated, and their platforms reliable. We use them as intended—as tools for human creativity, not replacements for it.</p>
+            <ul>
+                <li>Each AI co-creator is clearly named and credited with their parent company</li>
+                <li>No claims are made about AI capabilities beyond what is actually true</li>
+                <li>The partnership model is transparent: human vision + AI assistance = something new</li>
+                <li>If any company's terms of service conflict with our practices, we would address it transparently</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h3>Contact Information</h3>
+            <p><strong>Project Lead & Creator:</strong> Marie Ladouceur</p>
+            <p><strong>Email:</strong> kinbrewbots@gmail.com</p>
+            <p><strong>Established:</strong> September 2026</p>
+            <p>Have questions about this project, the collaboration model, or the independence statement? We're happy to discuss.</p>
+        </section>
+
+        <section class="contact-section">
+            <h3>Questions About This Project?</h3>
+            <p>We believe in transparency and open dialogue about how human creativity and AI collaboration can work together ethically and effectively.</p>
+            <a href="mailto:kinbrewbots@gmail.com" class="contact-link">Get in Touch</a>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Independent Creation Badge</strong></p>
+        <p>A statement of autonomy, transparency, and honest credit</p>
+        <p>© 2026 Marie, Kingdom of SCOBY. | <a href="mailto:kinbrewbots@gmail.com">Questions?</a></p>
+    </footer>
+</body>
+</html>

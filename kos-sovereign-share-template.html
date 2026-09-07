@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sovereign Share - Kingdom of SCOBY</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Cinzel:wght@600;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-dark: #5C1F1F;
+            --primary-light: #8B2E2E;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #C9A961;
+            --secondary-purple: #2D1B4E;
+            --bg-parchment: #F5F1E8;
+            --bg-parchment-alt: #EDE7D9;
+            --text-dark: #2B2B2B;
+            --text-black: #1A1A1A;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background: linear-gradient(135deg, #4a3728 0%, #3d2f23 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-parchment);
+            padding: 3rem;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Ornate frame effect */
+        .page-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid var(--accent-gold);
+            border-radius: 2px;
+            box-shadow:
+                inset 0 0 0 8px var(--bg-parchment),
+                inset 0 0 0 11px var(--primary-dark);
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: white;
+            border: 2px solid var(--primary-dark);
+            padding: 0.8rem 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            letter-spacing: 3px;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            border-top: 3px solid var(--accent-gold);
+            border-bottom: 3px solid var(--accent-gold);
+            padding: 1rem 0;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary-purple);
+            font-style: italic;
+            margin-top: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .era-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--secondary-purple);
+            margin-top: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .era-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Content Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .article-box {
+            background: linear-gradient(135deg, var(--bg-parchment) 0%, var(--bg-parchment-alt) 100%);
+            border: 4px solid var(--primary-dark);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-box::before {
+            content: "✦";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            background: var(--bg-parchment);
+            padding: 0 0.5rem;
+        }
+
+        .article-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--secondary-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .article-role {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            font-style: italic;
+        }
+
+        .article-badge {
+            width: 100px;
+            height: 100px;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, var(--bg-parchment-alt) 0%, var(--bg-parchment) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .article-link {
+            font-size: 0.85rem;
+            color: var(--secondary-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .article-content {
+            flex-grow: 1;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .editable-label {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+            opacity: 0.7;
+        }
+
+        /* Footer Credits */
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--accent-gold);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .credits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .credit-line {
+            color: var(--secondary-purple);
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .page-wrapper {
+                padding: 1.5rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page-wrapper {
+                box-shadow: none;
+                padding: 2rem;
+                max-width: 100%;
+            }
+
+            .page-wrapper::before {
+                display: none;
+            }
+        }
+
+        /* Edit Instructions */
+        .edit-instructions {
+            background: var(--secondary-purple);
+            color: var(--bg-parchment);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .edit-instructions.show {
+            display: block;
+        }
+
+        .edit-instructions h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .edit-instructions ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="content">
+            <!-- HEADER SECTION -->
+            <header>
+                <div class="header-badge">RELEASED EVERY NEW ROYAL ERA</div>
+                <h1>The Sovereign Share</h1>
+                <p class="subtitle">New Editions Released Every New Era</p>
+
+                <!-- EDIT: Change the era number below -->
+                <div class="era-label">Profile of</div>
+                <div class="era-number">Era 10</div>
+            </header>
+
+            <!-- MAIN CONTENT GRID -->
+            <div class="articles-grid">
+
+                <!-- ARTICLE 1: TASTE OF THE ERA -->
+                <article class="article-box">
+                    <div class="article-header">
+                        <!-- EDIT: Change section title if desired -->
+                        <div class="article-title">Taste of the Era</div>
+                        <!-- EDIT: Change role/writer name -->
+                        <div class="article-role">Written by: The Taste Profiler</div>
+                    </div>
+
+                    <!-- EDIT: Replace the emoji/icon (current: 🎭) with heraldic badge -->
+                    <div class="article-badge">🎭</div>
+
+                    <!-- EDIT: Replace "CLICK LINK TO READ ARTICLE" with your article title -->
+                    <a href="#" class="article-link">Click Link to Read Article</a>
+
+                    <div class="article-content">
+                        <!-- EDIT: Add your article description or summary -->
+                        <p>Tasks with clear deadlines that demand urgency. Share the brewing updates, milestone achievements, or time-sensitive Kingdom developments from this era.</p>
+                    </div>
+                </article>
+
+                <!-- ARTICLE 2: SCOOP OF THE ERA -->
+                <article class="article-box">
+                    <div class="article-header">
+                        <!-- EDIT: Change section title if desired -->
+                        <div class="article-title">Scoop of the Era</div>
+                        <!-- EDIT: Change role/writer name -->
+                        <div class="article-role">Written by: The Kingdom Scribe</div>
+                    </div>
+
+                    <!-- EDIT: Replace the emoji/icon (current: 📜) with heraldic badge -->
+                    <div class="article-badge">📜</div>
+
+                    <!-- EDIT: Replace "CLICK LINK TO READ ARTICLE" with your article title -->
+                    <a href="#" class="article-link">Click Link to Read Article</a>
+
+                    <div class="article-content">
+                        <!-- EDIT: Add your article description or summary -->
+                        <p>Tasks that you are committed to but they don't have to be done immediately. Share behind-the-scenes collaboration notes, AI reflections, or courtyard gossip from the Kingdom.</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- FOOTER SECTION -->
+            <footer>
+                <p><strong>The Sovereign Share</strong> | Connecting the Kingdom, Era by Era</p>
+                <div class="credits">
+                    <!-- EDIT: Change writers/editors as needed -->
+                    <div class="credit-line">Written by: Gemini/Canvas and Meta AI</div>
+                    <div class="credit-line">Fact Checking and Editing by: Marie L</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--accent-gold);">© 2026 Marie, Kingdom of SCOBY</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        // Optional: Instructions for editing (uncomment to show)
+        // document.querySelector('.edit-instructions').classList.add('show');
+    </script>
+</body>
+</html>
